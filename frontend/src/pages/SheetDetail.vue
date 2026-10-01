@@ -96,7 +96,7 @@ watch(sheetId, () => {
     <div class="detail-layout">
       <div>
         <header class="detail-hero">
-          <span class="detail-hero__code">{{ sheet.code }} · {{ sheet.series }}</span>
+          <span class="detail-hero__code">{{ sheet.code }} · 版本 v{{ sheet.version }} · {{ sheet.series }}</span>
           <h1>{{ sheet.title }}</h1>
           <p>{{ sheet.projection }}，图幅尺寸 {{ sheet.sheetSizeCm }}。现登记 {{ relatedPlaces.length }} 条地名对照。</p>
           <div class="detail-hero__tags">
@@ -179,6 +179,7 @@ watch(sheetId, () => {
           <h2>编目摘要</h2>
           <dl class="fact-list">
             <div><dt>图幅号</dt><dd>{{ sheet.code }}</dd></div>
+            <div><dt>确认版本</dt><dd data-testid="sheet-version">v{{ sheet.version }}</dd></div>
             <div><dt>所属图组</dt><dd>{{ sheet.series }}</dd></div>
             <div><dt>年代</dt><dd>{{ sheet.year }} 年</dd></div>
             <div><dt>比例尺</dt><dd>{{ sheet.scale }}</dd></div>

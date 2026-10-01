@@ -983,3 +983,162 @@ mark {
     grid-area: auto;
   }
 }
+
+/* 离线修订对账台 */
+.revision-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 24px;
+  align-items: start;
+}
+
+.revision-input {
+  padding: 24px;
+}
+
+.revision-textarea {
+  width: 100%;
+  min-height: 320px;
+  margin-top: 16px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fffdf8;
+  color: var(--ink);
+  font-family: 'SFMono-Regular', 'PingFang SC', Consolas, monospace;
+  font-size: 14px;
+  line-height: 1.8;
+  resize: vertical;
+}
+
+.revision-textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(139, 63, 47, 0.12);
+}
+
+.revision-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.revision-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.revision-findings {
+  margin-top: 24px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fffdf8;
+  box-shadow: var(--shadow);
+}
+
+.finding-group {
+  margin-top: 18px;
+}
+
+.finding-group__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.finding-list {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+.finding-list li {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  padding: 10px 14px;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  font-size: 14px;
+}
+
+.finding-list__code {
+  font-weight: 700;
+  color: var(--accent-dark);
+  white-space: nowrap;
+}
+
+.finding-list__subject {
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.finding-empty {
+  margin: 8px 0 0;
+}
+
+.revision-preview {
+  margin-top: 20px;
+  padding: 16px 18px;
+  border-radius: 10px;
+  background: rgba(82, 107, 89, 0.08);
+}
+
+.revision-preview ul {
+  margin: 10px 0 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 6px;
+}
+
+.revision-code-list,
+.revision-record-list {
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+
+.revision-code-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  border-bottom: 1px dashed var(--line);
+}
+
+.revision-record-list li {
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--paper);
+}
+
+.revision-record-list li div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.revision-record-list p {
+  margin: 8px 0 4px;
+  font-weight: 600;
+}
+
+@media (max-width: 960px) {
+  .revision-layout {
+    grid-template-columns: 1fr;
+  }
+}

@@ -5,8 +5,9 @@ import type { Sheet } from '../types/sheet'
 import { createId, db, plain } from '../utils/db'
 import { sortByYear } from '../utils/scale'
 
-export type NewSheet = Omit<Sheet, 'id' | 'neighborCodes'> & {
+export type NewSheet = Omit<Sheet, 'id' | 'neighborCodes' | 'version'> & {
   neighborCodes?: string[]
+  version?: number
 }
 export type NewScanItem = Omit<ScanItem, 'id'>
 
@@ -43,11 +44,26 @@ export const useSheetStore = defineStore('sheet', () => {
     await initialization
   }
 
+  /**
+   * 离线修订批次整批写入后，重新从 IndexedDB 读取已确认版本，
+   * 保证图幅列表、详情与邻接页读到的都是同一份数据。
+   */
+  async function reload(): Promise<void> {
+    const [sheetRows, scanRows] = await Promise.all([db.sheets.toArray(), db.scans.toArray()])
+    sheets.value = sortByYear(sheetRows).reverse()
+    allScans.value = scanRows
+    if (currentSheet.value) {
+      currentSheet.value = sheets.value.find((sheet) => sheet.id === currentSheet.value?.id) ?? null
+    }
+    initialized.value = true
+  }
+
   async function addSheet(input: NewSheet): Promise<Sheet> {
     await init()
     const sheet: Sheet = {
       ...input,
       id: createId('sheet'),
+      version: input.version ?? 1,
       neighborCodes: input.neighborCodes ?? [],
     }
     await db.sheets.add(plain(sheet))
@@ -112,6 +128,7 @@ export const useSheetStore = defineStore('sheet', () => {
     loading,
     initialized,
     init,
+    reload,
     addSheet,
     loadSheet,
     addScan,

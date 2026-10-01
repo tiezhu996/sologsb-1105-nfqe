@@ -38,7 +38,7 @@ onMounted(() => {
     <div class="page-heading">
       <div>
         <span class="page-kicker">NEIGHBOR ASSEMBLY</span>
-        <h1>{{ source.code }} 邻接与拼合预览</h1>
+        <h1>{{ source.code }} · v{{ source.version }} 邻接与拼合预览</h1>
         <p>按东、南、西、北排列相邻图幅，以主用扫描件核对接边，并明确尚缺图幅。</p>
       </div>
       <router-link :to="`/sheets/${source.id}`"><el-button>返回图幅详情</el-button></router-link>

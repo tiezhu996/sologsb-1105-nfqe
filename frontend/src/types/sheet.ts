@@ -4,6 +4,7 @@ export type SheetStatus = '待编' | '已编' | '待核'
 export interface Sheet {
   id: string
   code: string
+  version: number
   title: string
   year: number
   scale: SheetScale

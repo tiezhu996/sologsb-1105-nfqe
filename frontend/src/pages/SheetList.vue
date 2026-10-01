@@ -20,6 +20,7 @@ const formError = ref('')
 function createEmptyForm(): NewSheet {
   return {
     code: '',
+    version: 1,
     title: '',
     year: 1935,
     scale: '1:5000',
@@ -122,6 +123,9 @@ onMounted(() => {
         <el-form-item label="图幅号" required>
           <input v-model="form.code" class="native-field" data-testid="field-code" placeholder="例如：北平-丁-1" />
         </el-form-item>
+        <el-form-item label="图幅版本">
+          <input v-model.number="form.version" class="native-field" data-testid="field-version" type="number" min="1" />
+        </el-form-item>
         <el-form-item label="图幅题名" required>
           <input v-model="form.title" class="native-field" data-testid="field-title" placeholder="填写图上主要地名或区域" />
         </el-form-item>
@@ -184,7 +188,7 @@ onMounted(() => {
       <article v-for="sheet in filteredSheets" :key="sheet.id" class="sheet-card" data-testid="row-sheet">
         <div class="sheet-card__top">
           <div>
-            <div class="sheet-card__code">{{ sheet.code }}</div>
+            <div class="sheet-card__code" data-testid="sheet-code">{{ sheet.code }} · v{{ sheet.version }}</div>
             <div class="sheet-card__series">{{ sheet.series }}</div>
           </div>
           <el-tag :type="sheet.status === '已编' ? 'success' : sheet.status === '待核' ? 'warning' : 'info'" effect="dark">
