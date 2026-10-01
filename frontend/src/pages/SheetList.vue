@@ -184,7 +184,10 @@ onMounted(() => {
       <article v-for="sheet in filteredSheets" :key="sheet.id" class="sheet-card" data-testid="row-sheet">
         <div class="sheet-card__top">
           <div>
-            <div class="sheet-card__code">{{ sheet.code }}</div>
+            <div class="sheet-card__code">
+              {{ sheet.code }}
+              <el-tag size="small" type="info" effect="plain" class="version-tag">v{{ sheet.version }}</el-tag>
+            </div>
             <div class="sheet-card__series">{{ sheet.series }}</div>
           </div>
           <el-tag :type="sheet.status === '已编' ? 'success' : sheet.status === '待核' ? 'warning' : 'info'" effect="dark">

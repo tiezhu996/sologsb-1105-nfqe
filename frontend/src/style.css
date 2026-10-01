@@ -983,3 +983,132 @@ mark {
     grid-area: auto;
   }
 }
+
+/* 离线修订对账台 */
+.mb-16 {
+  margin-bottom: 16px;
+}
+
+.text-warning {
+  color: #a8771f;
+}
+
+.moss-text {
+  color: var(--moss);
+  font-weight: 600;
+}
+
+.revision-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 24px;
+  align-items: start;
+}
+
+.revision-layout aside {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: sticky;
+  top: 100px;
+}
+
+.revision-actions {
+  display: flex;
+  gap: 10px;
+  margin: 14px 0 10px;
+  flex-wrap: wrap;
+}
+
+.version-tag {
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.issue-list,
+.rule-list,
+.applied-list {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.issue-list__item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 7px 0;
+  border-bottom: 1px dashed var(--line);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.issue-list__item:last-child {
+  border-bottom: none;
+}
+
+.rule-list li {
+  position: relative;
+  padding: 6px 0 6px 18px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.rule-list li::before {
+  content: "▪";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+.applied-list li {
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--line);
+}
+
+.applied-list li:last-child {
+  border-bottom: none;
+}
+
+.applied-list div {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.revision-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.revision-table th,
+.revision-table td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+
+.revision-table th {
+  color: var(--muted);
+  font-weight: 600;
+  white-space: nowrap;
+  background: var(--paper-deep);
+}
+
+.revision-table td .el-tag {
+  margin-right: 2px;
+}
+
+@media (max-width: 1080px) {
+  .revision-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .revision-layout aside {
+    position: static;
+  }
+}

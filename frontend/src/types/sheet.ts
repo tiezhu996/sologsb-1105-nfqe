@@ -4,6 +4,8 @@ export type SheetStatus = '待编' | '已编' | '待核'
 export interface Sheet {
   id: string
   code: string
+  /** 图幅版本号，兄弟馆离线修订以版本对账，避免重号图幅并存 */
+  version: number
   title: string
   year: number
   scale: SheetScale

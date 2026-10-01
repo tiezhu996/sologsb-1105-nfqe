@@ -1,6 +1,7 @@
 import Dexie, { type Table } from 'dexie'
 import type { NameHistory } from '../types/history'
 import type { PlacePair } from '../types/placePair'
+import type { AppliedRevision } from '../types/revision'
 import type { ScanItem } from '../types/scan'
 import type { Sheet } from '../types/sheet'
 
@@ -8,6 +9,7 @@ const sheets: Sheet[] = [
   {
     id: 'sheet-bp-jia-3',
     code: '北平-甲-3',
+    version: 1,
     title: '正阳门至崇文门街巷图',
     year: 1907,
     scale: '1:5000',
@@ -20,6 +22,7 @@ const sheets: Sheet[] = [
   {
     id: 'sheet-bp-yi-3',
     code: '北平-乙-3',
+    version: 1,
     title: '东单至朝阳门内街巷图',
     year: 1921,
     scale: '1:5000',
@@ -32,6 +35,7 @@ const sheets: Sheet[] = [
   {
     id: 'sheet-bp-bing-5',
     code: '北平-丙-5',
+    version: 1,
     title: '北平近郊地形总图',
     year: 1935,
     scale: '1:50000',
@@ -44,6 +48,7 @@ const sheets: Sheet[] = [
   {
     id: 'sheet-tj-dong-2',
     code: '天津-东-2',
+    version: 1,
     title: '海河东岸及东车站一带',
     year: 1907,
     scale: '1:5000',
@@ -56,6 +61,7 @@ const sheets: Sheet[] = [
   {
     id: 'sheet-bd-zhong-4',
     code: '保定-中-4',
+    version: 1,
     title: '清苑县城厢及四关',
     year: 1921,
     scale: '1:50000',
@@ -68,6 +74,7 @@ const sheets: Sheet[] = [
   {
     id: 'sheet-kf-chengxi-1',
     code: '开封-城西-1',
+    version: 1,
     title: '大梁门至西门大街图',
     year: 1935,
     scale: '1:5000',
@@ -381,6 +388,7 @@ class GboldmapDatabase extends Dexie {
   scans!: Table<ScanItem, string>
   placePairs!: Table<PlacePair, string>
   histories!: Table<NameHistory, string>
+  appliedRevisions!: Table<AppliedRevision, string>
 
   constructor() {
     super('gboldmap-db')
@@ -405,6 +413,26 @@ class GboldmapDatabase extends Dexie {
           .toCollection()
           .modify((sheet: Sheet & { schemaRev?: number }) => {
             sheet.schemaRev = 2
+          })
+      })
+
+    // 图幅版本对账：sheets 增加 version 索引，appliedRevisions 留存已落位的离线批次
+    this.version(3)
+      .stores({
+        sheets: 'id, code, version, year, scale, status, series',
+        scans: 'id, sheetId, importedAt, quality',
+        placePairs: 'id, sheetId, oldName, newName, placeType, certainty',
+        histories: 'id, placePairId, period, changeType',
+        appliedRevisions: 'id, batchId, fingerprint, appliedAt',
+      })
+      .upgrade(async (transaction) => {
+        await transaction
+          .table<Sheet, string>('sheets')
+          .toCollection()
+          .modify((sheet: Sheet & { version?: number }) => {
+            if (typeof sheet.version !== 'number') {
+              sheet.version = 1
+            }
           })
       })
 
